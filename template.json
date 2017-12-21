@@ -50,9 +50,6 @@
         "winrm_use_ssl" : true,
         "winrm_insecure"  : true,
 
-        "ssh_keypair_name"  : "GIWindowsAMI_QA",
-        "ssh_private_key_file"  : "../packer-keys/GIWindowsAMI_QA.pem",
-
         "user_data_file" : "userdata/userdata.txt",
         "windows_password_timeout" : "20m",
 
