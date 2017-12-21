@@ -8,5 +8,6 @@
   "availability_zone": "us-east-1e",
   "instance_type": "t2.large",
   "temporary_key_pair_name": "GIWindowsAMI_QA",
-  "iam_role": "packer-iam-builds"
+  "iam_role": "packer-iam-builds" ,
+  "user_data": ""
 },
