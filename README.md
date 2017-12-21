@@ -1,2 +1,2 @@
 # packer-windows
-Packer AWS Build running Windows Server 2012
+Packer AWS Build for Windows Server 2012
