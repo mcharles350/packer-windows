@@ -46,7 +46,7 @@
         "winrm_use_ssl" : true,
         "winrm_insecure"  : true,
 
-        "user_data_file" : "{{user `user_data`}}",
+        "user_data_file" : "../userdata/userdata.txt",
         "windows_password_timeout" : "20m",
 
         "ami_description" : "Windows 2012 R2 Server pre-baked AMI build for testing purposes",
