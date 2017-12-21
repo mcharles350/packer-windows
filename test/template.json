@@ -46,7 +46,7 @@
         "winrm_use_ssl" : true,
         "winrm_insecure"  : true,
 
-        "user_data_file" : "packer-windows/userdata/userdata.txt",
+        "user_data_file" : "\\userdata\\userdata.txt",
         "windows_password_timeout" : "20m",
 
         "ami_description" : "Windows 2012 R2 Server pre-baked AMI build for testing purposes",
@@ -94,27 +94,27 @@
     },
     {
       "type": "file",
-      "source": "packer-windows/scripts/client.json",
+      "source": "../scripts/client.json",
       "destination": "C:/opt/sensu/conf.d/client.json"
     },
     {
       "type": "file",
-      "source": "packer-windows/puppet/gem.pp",
+      "source": "../puppet/gem.pp",
       "destination": "C:/apps/gem.pp"
     },
     {
       "type": "file",
-      "source": "packer-windows/scripts/sensu-client.xml",
+      "source": "../scripts/sensu-client.xml",
       "destination": "C:/apps/sensu-client.xml"
     },
     {
       "type": "file",
-      "source": "packer-windows/scripts/copyapps.ps1",
+      "source": "../scripts/copyapps.ps1",
       "destination": "C:/apps/copyapps.ps1"
     },
     {
       "type": "file",
-      "source": "packer-windows/scripts/winupdates.ps1",
+      "source": "../scripts/winupdates.ps1",
       "destination": "C:/Windows/Temp/winupdates.ps1"
     },
     {
@@ -141,13 +141,13 @@
     {
       "type": "powershell",
       "scripts": [
-        "packer-windows/scripts/cleanup.ps1",
-        "packer-windows/scripts/prepare.ps1"
+        "../scripts/cleanup.ps1",
+        "../scripts/prepare.ps1"
       ]
     },
     {
       "type": "powershell",
-      "script": "packer-windows/scripts/sysprep.ps1"
+      "script": "../scripts/sysprep.ps1"
     }
   ]
 }
