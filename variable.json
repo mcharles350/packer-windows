@@ -1,0 +1,12 @@
+{
+  "AWS_ACCESS_KEY_ID"  : "",
+  "AWS_SECRET_KEY"  : "",
+  "vpc" : "vpc-de6125bb",
+  "subnet" : "subnet-17ade53c",
+  "security_group" : "sg-35572453",
+  "region" : "us-east-1",
+  "availability_zone" : "us-east-1e",
+  "instance_type": "t2.large",
+  "temporary_key_pair_name" : "GIWindowsAMI_QA",
+  "iam_profile" : "WinAMI-IAM-Role"
+},

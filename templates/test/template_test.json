@@ -1,0 +1,148 @@
+{
+  "min_packer_version" : "0.12.0",
+
+    "builders": [
+      {
+        "type": "amazon-ebs",
+
+        "access_key" : "{{user `AWS_ACCESS_KEY_ID`}}",
+        "secret_key" : "{{user `AWS_SECRET_KEY`}}",
+
+        "region": "{{user `region`}}",
+        "vpc_id" : "{{user `vpc`}}",
+        "availability_zone" : "{{user `availability_zone`}}",
+        "subnet_id" : "{{user `subnet`}}",
+        "security_group_id" : "{{user `security_group`}}",
+        "associate_public_ip_address" : true,
+
+        "ami_name": "{{isotime \"2006-01-02\"}}-Windows-DEMO",
+        "source_ami" :  "",
+        "source_ami_filter": {
+          "filters": {
+            "virtualization-type": "hvm",
+            "name": "*Windows_Server-2012-R2_RTM-English-64Bit-Base-*",
+            "root-device-type": "ebs"
+          },
+          "owners": ["801119661308"],
+          "most_recent": true
+        },
+
+        "instance_type": "t2.large",
+        "temporary_key_pair_name" : "{{user `temporary_key_pair_name`}}",
+        "launch_block_device_mappings"  : [
+          {
+              "device_name" : "/dev/sda1",
+              "volume_size" : 50,
+              "volume_type" : "gp2",
+              "delete_on_termination" : true
+          }
+        ],
+
+        "communicator" : "winrm",
+        "winrm_port"  : 5986,
+        "winrm_username" : "Administrator",
+        "winrm_timeout" : "30m",
+        "winrm_use_ssl" : true,
+        "winrm_insecure"  : true,
+
+        "ssh_keypair_name"  : "GIWindowsAMI_Test",
+        "ssh_private_key_file"  : "../../keys/GIWindowsAMI_Test.pem",
+
+        "user_data_file" : "../../userdata/userdata.txt",
+        "windows_password_timeout" : "20m",
+
+        "ami_description" : "Windows 2012 R2 Server pre-baked AMI build",
+
+        "run_tags"  : {
+          "Name" : "{{isotime \"2006-01-02\"}}-Windows-DEMO",
+          "Cost Center" : "N/A",
+          "Customer Facing" : "No",
+          "Environment" : "Test",
+          "Role" : "AMI",
+          "Service" : "EC2",
+          "Support Team" : "techgssserver@ap.org",
+          "OS" : "Windows 2012 R2 STD"
+        },
+
+        "ami_users" : [
+          "959162376654"
+
+        ],
+
+        "tags"  : {
+            "Name" : "{{isotime \"2006-01-02\"}}-Windows-DEMO",
+            "Cost Center" : "N/A",
+            "Customer Facing" : "No",
+            "Environment" : "Test",
+            "Role" : "AMI",
+            "Service" : "EC2",
+            "Support Team" : "techgssserver@ap.org",
+            "OS" : "Windows 2012 R2 STD"
+          }
+        }
+  ],
+
+  "_comment"  : "Provision Section",
+  "provisioners" : [
+    {
+      "type"  : "powershell",
+      "inline"  : [
+        "New-Item -Path C:\\apps -ItemType Directory -Force",
+        "New-Item -Path C:\\opt -ItemType Directory -Force",
+        "New-Item -Path C:\\opt\\sensu -ItemType Directory -Force",
+        "New-Item -Path C:\\opt\\sensu\\conf.d -ItemType Directory -Force"
+      ]
+    },
+    {
+      "type"  : "file",
+      "source"  : "../../scripts/client.json",
+      "destination" : "C:\\opt\\sensu\\conf.d\\client.json"
+    },
+    {
+      "type"  : "file",
+      "source"  : "../../scripts/sensu-client.xml",
+      "destination" : "C:\\apps\\sensu-client.xml"
+    },
+    {
+      "type"  : "file",
+      "source"  : "../../scripts/winupdates.ps1",
+      "destination" : "C:\\Windows\\Temp\\winupdates.ps1"
+    },
+    {
+      "type" : "powershell",
+      "scripts" : [
+          "../../scripts/apps.ps1",
+          "../../scripts/ps51install.ps1",
+          "../../scripts/puppet.ps1"
+        ]
+    },
+    {
+      "type": "windows-restart",
+      "restart_command": "shutdown /r /t 5",
+      "restart_timeout": "10m"
+    },      
+    {
+      "type"  : "puppet-masterless",
+      "manifest_file": "../../puppet/downloads.pp"
+    },
+    {
+      "type": "puppet-masterless",
+      "manifest_file": "../../puppet/package.pp"
+    },  
+    {
+      "type": "powershell",
+      "inline": [
+        "Move-Item C:\\apps\\sensu-client.xml C:\\opt\\sensu\bin -Force",
+        "New-Service -Name'Sensu-Client' -StartupType Manual -BinaryPathName 'C:\\opt\\sensu\\bin\\sensu-client.exe' -DisplayName'Sensu Client' -Description'Enables monitoring for a computer by Sensu.'"
+      ]
+    },    
+    {
+      "type" : "powershell",
+      "scripts" : [
+        "../../scripts/cleanup.ps1",
+        "../../scripts/prepare.ps1",
+        "../../scripts/Sysprep.ps1"
+      ]
+    }
+  ]
+}
