@@ -1,4 +1,5 @@
 {
+  "description": "Windows Server 2012 R2",  
   "min_packer_version" : "0.12.0",
 
     "builders": [
@@ -32,7 +33,7 @@
         "launch_block_device_mappings"  : [
           {
               "device_name" : "/dev/sda1",
-              "volume_size" : 136,
+              "volume_size" : 50,
               "volume_type" : "gp2",
               "delete_on_termination" : true
           }
@@ -45,13 +46,10 @@
         "winrm_use_ssl" : true,
         "winrm_insecure"  : true,
 
-        "ssh_keypair_name"  : "GIWindowsAMI_QA",
-        "ssh_private_key_file"  : "keys/GIWindowsAMI_QA.pem",
-
-        "user_data_file" : "userdata/userdata.txt",
+        "user_data_file" : "../userdata/userdata.txt",
         "windows_password_timeout" : "20m",
 
-        "ami_description" : "Windows 2012 R2 Server pre-baked AMI build",
+        "ami_description" : "Windows 2012 R2 Server pre-baked AMI build for testing purposes",
 
         "run_tags"  : {
           "Name" : "Windows-AP-TEST-{{isotime \"2006-01-02\"}}",
@@ -61,7 +59,8 @@
           "Role" : "AMI",
           "Service" : "EC2",
           "Support Team" : "techgssserver@ap.org",
-          "OS" : "Windows 2012 R2 STD"
+          "OS" : "Windows 2012 R2 STD",
+          "COMMENTS": "FOR TESTING PURPOSES ONLY.  DO NOT USE FOR PRODUCTION!!"          
         },
 
         "tags"  : {
@@ -72,16 +71,12 @@
           "Role" : "AMI",
           "Service" : "AMI",
           "Support Team" : "techgssserver@ap.org",
-          "OS" : "Windows 2012 R2 STD"
+          "OS" : "Windows 2012 R2 STD",
+          "COMMENTS" : "FOR TESTING PURPOSES ONLY.  DO NOT USE FOR PRODUCTION!!"
         },
 
-        "ami_regions" : [
-            "us-west-2",
-            "eu-west-1"
-        ],
-
         "ami_users" : [
-          "222259241209"
+          "720322524327"
         ]
       }
   ],
@@ -91,39 +86,68 @@
     {
       "type"  : "powershell",
       "inline"  : [
-        "New-Item -Path C:\\apps -ItemType Directory -Force",
-        "New-Item -Path C:\\opt -ItemType Directory -Force",
-        "New-Item -Path C:\\opt\\sensu -ItemType Directory -Force",
-        "New-Item -Path C:\\opt\\sensu\\conf.d -ItemType Directory -Force"
+        "New-Item -Path C:\\apps -ItemType Directory -Force | Out-Null",
+        "New-Item -Path C:\\opt -ItemType Directory -Force | Out-Null",
+        "New-Item -Path C:\\opt\\sensu -ItemType Directory -Force | Out-Null",
+        "New-Item -Path C:\\opt\\sensu\\conf.d -ItemType Directory -Force | Out-Null"
       ]
     },
     {
-      "type"  : "file",
-      "source"  : "scripts/client.json",
-      "destination" : "C:\\opt\\sensu\\conf.d\\client.json"
+      "type": "file",
+      "source": "../scripts/client.json",
+      "destination": "C:/opt/sensu/conf.d/client.json"
     },
     {
-      "type"  : "file",
-      "source"  : "scripts/sensu-client.xml",
-      "destination" : "C:\\apps\\sensu-client.xml"
+      "type": "file",
+      "source": "../puppet/gem.pp",
+      "destination": "C:/apps/gem.pp"
     },
     {
-      "type"  : "file",
-      "source"  : "scripts/winupdates.ps1",
-      "destination" : "C:\\Windows\\Temp\\winupdates.ps1"
+      "type": "file",
+      "source": "../scripts/sensu-client.xml",
+      "destination": "C:/apps/sensu-client.xml"
     },
     {
-      "type" : "powershell",
-      "scripts" : [
-          "scripts/copyapps.ps1",
-          "scripts/cleanup.ps1",
-          "scripts/prepare.ps1"
-      ],
-      "start_retry_timeout" : "20m"
+      "type": "file",
+      "source": "../scripts/copyapps.ps1",
+      "destination": "C:/apps/copyapps.ps1"
     },
     {
-      "type" : "powershell",
-      "script" :  "scripts/Sysprep.ps1"
+      "type": "file",
+      "source": "../scripts/winupdates.ps1",
+      "destination": "C:/Windows/Temp/winupdates.ps1"
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "Add-WindowsFeature -Name NET-Framework-Core",
+        "Set-Location -Path C:/apps",
+        "./copyapps.ps1"
+      ]
+    },
+    {
+      "type": "windows-restart",
+      "restart_command": "shutdown /r /t 5 && net stop winrm",
+      "restart_timeout": "10m"
+    },
+    {
+      "type": "windows-shell",
+      "inline": [
+        "cd /",
+        "cd C:/apps",
+        "puppet apply gem.pp"
+      ]
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/cleanup.ps1",
+        "../scripts/prepare.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "script": "../scripts/sysprep.ps1"
     }
   ]
 }

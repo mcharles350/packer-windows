@@ -1,9 +1,9 @@
 {
   "AWS_ACCESS_KEY_ID": "",
   "AWS_SECRET_KEY": "",
-  "vpc": "vpc-faeb5e9f",
-  "subnet": "subnet-004c2e3a",
-  "security_group": "sg-f5de4785",
+  "vpc": "vpc-de6125bb",
+  "subnet": "subnet-17ade53c",
+  "security_group": "sg-35572453",
   "region": "us-east-1",
   "availability_zone": "us-east-1e",
   "instance_type": "t2.large",

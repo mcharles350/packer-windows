@@ -14,7 +14,7 @@
         "availability_zone" : "{{user `availability_zone`}}",
         "subnet_id" : "{{user `subnet`}}",
         "security_group_id" : "{{user `security_group`}}",
-        "associate_public_ip_address" : false,
+        "associate_public_ip_address" : true,
 
         "ami_name": "Windows-AP-TEST-{{isotime \"2006-01-02\"}}",
         "source_ami" :  "",
@@ -27,7 +27,7 @@
           "owners": ["801119661308"],
           "most_recent": true
         },
-
+        "iam_instance_profile" : "{{user `iam_role`}}",
         "instance_type": "t2.large",
         "temporary_key_pair_name" : "{{user `temporary_key_pair_name`}}",
         "launch_block_device_mappings"  : [
