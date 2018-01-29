@@ -10,7 +10,7 @@ Created by: Max Charles Jr.
 #Install Git
 # Set Location to download the Git Installer for Windows x64
 Write-Host "Downloading Git"
-$url = "https://github.com/git-for-windows/git/releases/download/v2.14.2.windows.1/Git-2.14.2-64-bit.exe"
+$url = "https://github.com/git-for-windows/git/releases/download/v2.16.1.windows.1/Git-2.16.1-64-bit.exe"
 
 # Set the download destination & file name
 $path = "c:\apps\git-64-bit.exe"
@@ -25,7 +25,7 @@ $webclient.DownloadFile( $url, $path )
 # Wait 30 seconds for download to complete
 start-sleep -Seconds 30
 
-# Install Gitlab
+# Install Git
 Write-Host "Installing Git"
 Start-Sleep -Seconds 15
 start-process -FilePath "c:\apps\git-64-bit.exe" -PassThru "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=C:\git_log.txt" -Wait
@@ -144,8 +144,21 @@ Start-Sleep -Seconds 10
 
 #Install Notepad++
 #########################################################################
+Write-Host "Downloading Notepad++"
+$url = "https://notepad-plus-plus.org/repository/7.x/7.5.4/npp.7.5.4.Installer.x64.exe"
+
+# Set the download destination & file name
+$path = "c:\apps\npp.7.5.4.Installer.x64.exe"
+
+# Ignore SSL Certificate errors
+# [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+
+# Download the Git installer to the destination specified
+$webclient = new-object System.Net.WebClient
+$webclient.DownloadFile( $url, $path )
+
 Write-Host "Installing Notepad++"
-$ExecuteInstall = {C:\apps\npp.7.3.1.Installer.x64.exe /S}
+$ExecuteInstall = {C:\apps\npp.7.5.4.Installer.x64.exe /S}
 
 $a = Invoke-Command -ScriptBlock $ExecuteInstall -ErrorAction SilentlyContinue
 
@@ -225,15 +238,15 @@ Start-Sleep -Seconds 30
 #########################################################################
 #>
 
-#Install Windows Update KB3134758
+#Install Windows Update KB3191564
 #########################################################################################################
-Write-Host "Install KB3134758-x64 - Windows Mgmt Framework 5"
-$WU = {Start-Process dism.exe -ArgumentList "/online /add-package /PackagePath:C:\apps\win2012r2\WindowsBlue-KB3134758-x64.cab /quiet /norestart" -Wait -PassThru}
+Write-Host "Install KB3191564-x64 - Windows Mgmt Framework 5.1"
+$WU = {Start-Process dism.exe -ArgumentList "/online /add-package /PackagePath:C:\apps\win2012r2\WindowsBlue-KB3191564-x64.cab /quiet /norestart" -Wait -PassThru}
 $a = Invoke-Command -ScriptBlock $WU -ErrorAction SilentlyContinue
 $a
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "KB3134758 is installed." -ForegroundColor Green
+Write-Host "KB3191564 is installed." -ForegroundColor Green
 
 Start-Sleep -Seconds 30
 #########################################################################################################
