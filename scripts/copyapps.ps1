@@ -33,7 +33,7 @@ Write-Host "Git is installed"
 #########################################################################################################################################################
 #Download apps.zip file from APQA S3 bucket
 Write-Host "Downloading files from S3"
-Invoke-WebRequest -Uri https://s3.amazonaws.com/packer-windows-qa-associatedpressqa-us-east-1-goldami/apps.zip -OutFile C:\apps\apps.zip
+Invoke-WebRequest -Uri "https://s3.amazonaws.com/packer-windows-qa-associatedpressqa-us-east-1-goldami/apps.zip" -OutFile C:\apps\apps.zip
 
 #Extract apps.zip file
 $shell_app=new-object -com shell.application
