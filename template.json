@@ -173,7 +173,8 @@
     },    
     {
       "type" : "powershell",
-      "script": "scripts/sysprep.ps1"
+      "script": "scripts/sysprep.ps1",
+      "valid_exit_codes" : "0,1"      
     }
   ]
 }
