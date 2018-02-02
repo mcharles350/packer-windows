@@ -32,6 +32,7 @@
         "force_deregister": true,
         "encrypt_boot": false,        
 
+        "ena_support" : true,        
         "instance_type": "t2.large",
         "temporary_key_pair_name" : "{{user `temporary_key_pair_name`}}",
         "launch_block_device_mappings"  : [
