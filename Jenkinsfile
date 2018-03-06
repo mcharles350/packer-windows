@@ -16,7 +16,7 @@ node {
         stage 'Build'
             export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-            sh packer build -machine-readable -var "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -var "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -var-file="test/variable.json" test/template.json
+            sh "packer build -machine-readable -var 'AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' -var 'AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' -var-file='test/variable.json' test/template.json"
         
         stage 'Test'
             print "Testing goes here."
