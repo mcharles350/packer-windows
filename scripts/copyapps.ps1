@@ -17,6 +17,7 @@ $path = "c:\apps\git-64-bit.exe"
 
 # Ignore SSL Certificate errors
 # [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Download the Git installer to the destination specified
 $webclient = new-object System.Net.WebClient
