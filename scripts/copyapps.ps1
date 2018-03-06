@@ -13,7 +13,7 @@ Write-Host "Downloading Git"
 $url = "https://github.com/git-for-windows/git/releases/download/v2.16.1.windows.1/Git-2.16.1-64-bit.exe"
 
 # Set the download destination & file name
-$path = "c:\apps\Git-2.16.1-64-bit.exe"
+$path = "c:\apps\git-64-bit.exe"
 
 # Ignore SSL Certificate errors
 # [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
@@ -28,7 +28,7 @@ start-sleep -Seconds 30
 # Install Git
 Write-Host "Installing Git"
 Start-Sleep -Seconds 15
-start-process -FilePath "c:\apps\Git-2.16.1-64-bit.exe" -PassThru "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=C:\git_log.txt" -Wait
+start-process -FilePath "c:\apps\git-64-bit.exe" -PassThru "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=C:\git_log.txt" -Wait
 Write-Host "Git is installed"
 #########################################################################################################################################################
 #Download apps.zip file from APQA S3 bucket
