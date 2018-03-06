@@ -6,7 +6,7 @@ node {
 
     try {
         stage 'Checkout'
-            checkout git
+            checkout scm
 
         stage 'Validate'
             def packer_file = 'template.json'
