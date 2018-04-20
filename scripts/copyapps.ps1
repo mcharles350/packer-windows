@@ -96,7 +96,7 @@ Write-Host "AWS Agent for Amazon Inspector"
 start-process -FilePath "c:\apps\AWSAgentInstall.exe" -PassThru "/install /quiet /norestart /log C:\aws_inspector.txt" -Wait
 
 Start-Sleep -Seconds 15
-Stop-Service -Name "AWS Agent Update Service" -Force
+#Stop-Service -Name "AWS Agent Update Service" -Force
 #Stop-Service -Name "AWS Agent Updater Service" -Force
 #########################################################################################################################################################
 
