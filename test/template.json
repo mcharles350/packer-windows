@@ -146,12 +146,13 @@
       "scripts": [
         "scripts/cleanup.ps1",
         "scripts/prepare.ps1"
-      ]
+      ],
+      "valid_exit_codes" : [0,259,3010]    
     },
     {
       "type": "powershell",
       "script": "scripts/sysprep.ps1",
-      "valid_exit_codes" : "0,1"
+      "valid_exit_codes" : [0,259,3010]    
     }
   ]
 }
