@@ -103,14 +103,14 @@ Start-Sleep -Seconds 15
 #Install Puppet Agent 64-bit
 ###############################################################################################################################################
 Write-Host "Install Puppet Agent"
-Invoke-WebRequest -Uri https://downloads.puppetlabs.com/windows/puppet-agent-1.10.1-x64.msi -OutFile C:\apps\puppet-agent-1.10.1-x64.msi -ErrorAction SilentlyContinue
+Invoke-WebRequest -Uri https://downloads.puppetlabs.com/windows/puppet-agent-1.10.12-x64.msi -OutFile C:\apps\puppet-agent-1.10.12-x64.msi -ErrorAction SilentlyContinue
 
 Write-Host "Puppet Agent download complete" 
 Start-Sleep -Seconds 15
 
 Write-Host "Install Puppet Agent" 
 Start-Sleep -Seconds 15
-Start-Process msiexec.exe -ArgumentList '/qn /i C:\apps\puppet-agent-1.10.1-x64.msi PUPPET_MASTER_SERVER=badhost.ap.org /log C:\puppet_logs.txt' -Wait -PassThru -ErrorAction SilentlyContinue
+Start-Process msiexec.exe -ArgumentList '/qn /i C:\apps\puppet-agent-1.10.12-x64.msi PUPPET_MASTER_SERVER=badhost.ap.org /log C:\puppet_logs.txt' -Wait -PassThru -ErrorAction SilentlyContinue
 Write-Host "Puppet Agent Install Complete" 
 
 <#
