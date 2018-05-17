@@ -26,8 +26,7 @@
           "owners": ["801119661308"],
           "most_recent": true
         },
-        "iam_instance_profile" : "{{user `iam_role`}}",
-
+        
         "ena_support" : true,        
         "instance_type": "t2.large",
         "temporary_key_pair_name" : "{{user `temporary_key_pair_name`}}",
