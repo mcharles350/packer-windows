@@ -262,3 +262,16 @@ Invoke-Command -ScriptBlock {C:\apps\winupdates.ps1 $Option} -ErrorAction Ignore
 Start-Sleep -Seconds 25
 ###########################################################################################################
 #>
+
+#Install Puppet Agent 64-bit
+###############################################################################################################################################
+Write-Host "Install .NET 4.7.2"
+Invoke-WebRequest -Uri http://go.microsoft.com/fwlink/?LinkId=863265 -OutFile C:\apps\net-installer.msi -ErrorAction SilentlyContinue
+
+Write-Host ".NET 4.7.2 download is completed" 
+Start-Sleep -Seconds 15
+
+Write-Host "Installing .NET 4.7.2" 
+Start-Sleep -Seconds 15
+Start-Process msiexec.exe -ArgumentList '/qn /i C:\apps\net-installer.msi /norestart /log C:\net472.txt' -Wait -PassThru -ErrorAction SilentlyContinue
+Write-Host ".NET 4.7.2 is now installed."
