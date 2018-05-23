@@ -14,7 +14,6 @@
         "vpc_id" : "{{user `vpc`}}",
         "availability_zone" : "{{user `availability_zone`}}",
         "subnet_id" : "{{user `subnet`}}",
-        "security_group_id" : "{{user `security_group`}}",
         "associate_public_ip_address" : false,
 
         "ami_name": "Windows-AP-GOLD-{{isotime \"2006-01-02\"}}",
