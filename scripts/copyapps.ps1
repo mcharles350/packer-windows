@@ -263,7 +263,7 @@ Start-Sleep -Seconds 25
 ###########################################################################################################
 #>
 
-#Install Puppet Agent 64-bit
+<#Install Puppet Agent 64-bit -- Release for next June 2018 build
 ###############################################################################################################################################
 Write-Host "Install .NET 4.7.2"
 Invoke-WebRequest -Uri http://go.microsoft.com/fwlink/?LinkId=863265 -OutFile C:\apps\net-installer.msi -ErrorAction SilentlyContinue
@@ -275,3 +275,4 @@ Write-Host "Installing .NET 4.7.2"
 Start-Sleep -Seconds 15
 Start-Process msiexec.exe -ArgumentList '/qn /i C:\apps\net-installer.msi /norestart /log C:\net472.txt' -Wait -PassThru -ErrorAction SilentlyContinue
 Write-Host ".NET 4.7.2 is now installed."
+#>
