@@ -30,7 +30,7 @@ start-sleep -Seconds 30
 Write-Host "Installing Git"
 Start-Sleep -Seconds 15
 start-process -FilePath "c:\apps\git-64-bit.exe" -PassThru "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=C:\git_log.txt" -Wait
-Write-Host "Git is installed"
+Write-Host "Git is now installed"
 #########################################################################################################################################################
 #Download apps.zip file from APQA S3 bucket
 Write-Host "Downloading files from S3"
@@ -43,7 +43,7 @@ $zip_file = $shell_app.namespace("C:\apps" + "\$filename")
 $destination = $shell_app.namespace("C:\apps")
 $destination.Copyhere($zip_file.items())
 
-Write-Host "S3 Download Complete"
+Write-Host "S3 file download is now complete"
 ################################################################################################################
 #Install AWS CLI
 
@@ -56,7 +56,7 @@ Write-Host "Installing AWS Command Line Interface"
 $a = Start-Process msiexec.exe -ArgumentList "/i C:\apps\AWSCLI64.msi /qn /norestart /log C:\awscli_logs.txt" -Wait -PassThru
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "AWS Command Line Interface installed." -ForegroundColor Green
+Write-Host "AWS Command Line Interface is now installed." -ForegroundColor Green
 
 Start-Sleep -Seconds 15
 ##################################################################################################################
@@ -92,7 +92,7 @@ $webclient.DownloadFile( $url, $path )
 start-sleep 10
 
 # Install AWS Agent for Amazon Inspector
-Write-Host "AWS Agent for Amazon Inspector"
+Write-Host "AWS Agent for Amazon Inspector is now installed"
 start-process -FilePath "c:\apps\AWSAgentInstall.exe" -PassThru "/install /quiet /norestart /log C:\aws_inspector.txt" -Wait
 
 Start-Sleep -Seconds 15
@@ -111,7 +111,7 @@ Start-Sleep -Seconds 15
 Write-Host "Install Puppet Agent" 
 Start-Sleep -Seconds 15
 Start-Process msiexec.exe -ArgumentList '/qn /i C:\apps\puppet-agent-1.10.12-x64.msi PUPPET_MASTER_SERVER=badhost.ap.org /log C:\puppet_logs.txt' -Wait -PassThru -ErrorAction SilentlyContinue
-Write-Host "Puppet Agent Install Complete" 
+Write-Host "Puppet Agent is now installed" 
 
 <#
 $source = "https://puppet-mom.ap.org:8140/packages/current/windows-x86_64-1.10.1/puppet-agent-x64.msi"
@@ -138,9 +138,9 @@ $a = Invoke-Command -ScriptBlock $ExecuteInstall -ErrorAction SilentlyContinue
 $a
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "Altiris Cloud Enable Management Agent installed." -ForegroundColor Green
+Write-Host "Altiris Cloud Enable Management Agent is now installed." -ForegroundColor Green
 
-Start-Sleep -Seconds 10
+Start-Sleep -Seconds 15
 #################################################################
 
 #Install Notepad++
@@ -164,9 +164,9 @@ $ExecuteInstall = {C:\apps\npp.7.5.4.Installer.x64.exe /S}
 $a = Invoke-Command -ScriptBlock $ExecuteInstall -ErrorAction SilentlyContinue
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "Notepad++ installed." -ForegroundColor Green
+Write-Host "Notepad++ is now installed." -ForegroundColor Green
 
-Start-Sleep -Seconds 25
+Start-Sleep -Seconds 15
 #########################################################################
 
 #Install SEP client (Quiet Install)
@@ -178,9 +178,9 @@ $a = Invoke-Command -ScriptBlock $ExecuteInstall -ErrorAction SilentlyContinue
 $a
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "Symantec Endpoint Protection installed." -ForegroundColor Green
+Write-Host "Symantec Endpoint Protection is now installed." -ForegroundColor Green
 
-Start-Sleep -Seconds 30
+Start-Sleep -Seconds 15
 #########################################################################
 
 #Install NetTime
@@ -191,9 +191,9 @@ $a = Start-Process -FilePath C:\apps\InstallTimeSync.exe -ArgumentList /silent
 $a
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "NetTime installed." -ForegroundColor Green
+Write-Host "NetTime is now installed." -ForegroundColor Green
 
-Start-Sleep -Seconds 25
+Start-Sleep -Seconds 15
 #########################################################################
 
 <#
@@ -213,18 +213,18 @@ Start-Sleep -Seconds 30
 #Install Sensu Agent
 #########################################################################
 Write-Host "Downloading Sensu"
-Invoke-WebRequest -Uri https://sensu.global.ssl.fastly.net/msi/2012r2/sensu-0.29.0-7-x64.msi -OutFile C:\apps\sensu_ap.msi -ErrorAction SilentlyContinue
+Invoke-WebRequest -Uri https://sensu.global.ssl.fastly.net/msi/2012r2/sensu-1.4.2-3-x64.msi -OutFile C:\apps\sensu_ap.msi -ErrorAction SilentlyContinue
 
 #Invoke-WebRequest -Uri $source -OutFile $destination
 Write-Host "Installing Sensu"
-Start-Sleep -Seconds 30
+Start-Sleep -Seconds 5
 
 Start-Process msiexec.exe -ArgumentList "/i C:\apps\sensu_ap.msi /qn /norestart /log C:\sensu_log.txt" -Wait -PassThru
 Move-Item C:\apps\sensu-client.xml C:\opt\sensu\bin -Force
 
 New-Service -Name "Sensu-Client" -StartupType Manual -BinaryPathName "C:\opt\sensu\bin\sensu-client.exe" -DisplayName "Sensu Client" -Description "Enables monitoring for a computer by Sensu."
-Start-Sleep -Seconds 30
-
+Start-Sleep -Seconds 10
+Write-Host "Sensu Agent is now installed"
 <#
 #########################################################################
 #Install Chocolatey
@@ -243,7 +243,7 @@ $a = Invoke-Command -ScriptBlock $WU -ErrorAction SilentlyContinue
 $a
 
 #Write-Host "ExitCode is " $a.ExitCode
-Write-Host "KB3191564 is installed." -ForegroundColor Green
+Write-Host "KB3191564 is now installed." -ForegroundColor Green
 
 Start-Sleep -Seconds 30
 #########################################################################################################
