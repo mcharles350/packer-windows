@@ -132,7 +132,7 @@ Start-Sleep -Seconds 15
 #Install SMP CEM Agent
 ################################################################
 Write-Host "Installing Altiris CEM Agent"
-$ExecuteInstall = {C:\apps\CEMInstall.exe /s /pass:Password123!}
+$ExecuteInstall = {C:\apps\CEMInstall.exe /s /pass:P@ssword123!}
 
 $a = Invoke-Command -ScriptBlock $ExecuteInstall -ErrorAction SilentlyContinue
 $a
