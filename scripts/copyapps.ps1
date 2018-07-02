@@ -212,18 +212,14 @@ Start-Sleep -Seconds 30
 
 #Install Sensu Agent
 #########################################################################
-Write-Host "Installing Sensu"
-$source = "https://sensu.global.ssl.fastly.net/msi/2012r2/sensu-0.29.0-7-x64.msi"
-$destination = "C:\apps\sensu_ap.msi"
-
-$webclient = new-object System.Net.WebClient
-$webclient.DownloadFile( $source, $destination )
+Write-Host "Downloading Sensu"
+Invoke-WebRequest -Uri https://sensu.global.ssl.fastly.net/msi/2012r2/sensu-0.29.0-7-x64.msi -OutFile C:\apps\sensu_ap.msi -ErrorAction SilentlyContinue
 
 #Invoke-WebRequest -Uri $source -OutFile $destination
+Write-Host "Installing Sensu"
+Start-Sleep -Seconds 30
 
-$a = Start-Process msiexec.exe -ArgumentList "/i C:\apps\sensu_ap.msi /qn /norestart /log C:\sensu_log.txt" -Wait -PassThru
-$a
-
+Start-Process msiexec.exe -ArgumentList "/i C:\apps\sensu_ap.msi /qn /norestart /log C:\sensu_log.txt" -Wait -PassThru
 Move-Item C:\apps\sensu-client.xml C:\opt\sensu\bin -Force
 
 New-Service -Name "Sensu-Client" -StartupType Manual -BinaryPathName "C:\opt\sensu\bin\sensu-client.exe" -DisplayName "Sensu Client" -Description "Enables monitoring for a computer by Sensu."
