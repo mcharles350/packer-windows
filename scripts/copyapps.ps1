@@ -210,7 +210,7 @@ Write-Host "Gem Packages installed"
 Start-Sleep -Seconds 30
 #>
 
-#Install Sensu Agent
+<#Install Sensu Agent
 #########################################################################
 Write-Host "Downloading Sensu"
 Invoke-WebRequest -Uri https://sensu.global.ssl.fastly.net/msi/2012r2/sensu-1.4.2-3-x64.msi -OutFile C:\apps\sensu_ap.msi -ErrorAction SilentlyContinue
@@ -220,12 +220,12 @@ Write-Host "Installing Sensu"
 Start-Sleep -Seconds 5
 
 Start-Process msiexec.exe -ArgumentList "/i C:\apps\sensu_ap.msi /qn /norestart /log C:\sensu_log.txt" -Wait -PassThru
-Move-Item C:\apps\sensu-client.xml C:\opt\sensu\bin -Force
+Move-Item C:\apps\sensu-client.xml C:\opt\sensu\bin\sensu-client.xml -Force
 
 New-Service -Name "Sensu-Client" -StartupType Manual -BinaryPathName "C:\opt\sensu\bin\sensu-client.exe" -DisplayName "Sensu Client" -Description "Enables monitoring for a computer by Sensu."
 Start-Sleep -Seconds 10
 Write-Host "Sensu Agent is now installed"
-<#
+
 #########################################################################
 #Install Chocolatey
 #########################################################################
@@ -238,7 +238,7 @@ Start-Sleep -Seconds 30
 #Install Windows Update KB3191564
 #########################################################################################################
 Write-Host "Install KB3191564-x64 - Windows Mgmt Framework 5.1"
-$WU = {Start-Process dism.exe -ArgumentList "/online /add-package /PackagePath:C:\apps\win2012r2\WindowsBlue-KB3191564-x64.cab /quiet /norestart" -Wait -PassThru}
+$WU = {Start-Process dism.exe -ArgumentList "/online /add-package /PackagePath:C:\apps\WindowsBlue-KB3191564-x64.cab /quiet /norestart" -Wait -PassThru}
 $a = Invoke-Command -ScriptBlock $WU -ErrorAction SilentlyContinue
 $a
 

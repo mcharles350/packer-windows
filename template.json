@@ -144,6 +144,8 @@
     },    
     {
       "type" : "powershell",
+      "elevated_user" : "Administrator",
+      "elevated_password" : "{{.WinRMPassword}}",
       "inline" : [
         "Add-WindowsFeature -Name NET-Framework-Core",
         "Set-Location -Path C:/apps",
@@ -160,7 +162,9 @@
       "inline": [
         "cd /",
         "cd C:/apps",
-        "puppet apply gem.pp"
+        "puppet apply gem.pp",
+        "Move-Item C:\\apps\\sensu-client.xml C:\\opt\\sensu\\bin\\sensu-client.xml -Force",
+        "New-Service -Name 'Sensu-Client' -StartupType Manual -BinaryPathName 'C:\\opt\\sensu\\bin\\sensu-client.exe' -DisplayName 'Sensu Client' -Description 'Enables monitoring for a computer by Sensu.'"
       ]
     },
     {
