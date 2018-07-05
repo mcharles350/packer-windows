@@ -29,7 +29,7 @@ package { 'macaddr':
 
 package { 'sensu':
   ensure          =>  'installed',
-  source          =>  'C:\apps\sensu-1.4.2-3-x64.msi',
-  install_options =>  ['INSTALLDIR=C:\opt'],
+  source          =>  'C:\\apps\\sensu-1.4.2-3-x64.msi',
+  install_options =>  ['INSTALLDIR=C:\\opt'],
   provider        =>  windows  
 }
