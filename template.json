@@ -160,7 +160,7 @@
     {
       "type": "windows-shell",
       "inline": [
-        "puppet module install puppet-download_file --version 3.1.0",
+        "puppet module install puppet-download_file --version 3.1.0"
       ]
     },
     {
