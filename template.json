@@ -160,9 +160,14 @@
     {
       "type": "windows-shell",
       "inline": [
+        "puppet module install puppet-download_file --version 3.1.0",
+      ]
+    },
+    {
+      "type" : "windows-shell",
+      "inline" : [
         "cd /",
         "cd C:/apps",
-        "puppet module install puppet-download_file --version 3.1.0",
         "puppet apply gem.pp",
         "Move-Item C:\\apps\\sensu-client.xml C:\\opt\\sensu\\bin\\sensu-client.xml -Force",
         "New-Service -Name 'Sensu-Client' -StartupType Manual -BinaryPathName 'C:\\opt\\sensu\\bin\\sensu-client.exe' -DisplayName 'Sensu Client' -Description 'Enables monitoring for a computer by Sensu.'"
